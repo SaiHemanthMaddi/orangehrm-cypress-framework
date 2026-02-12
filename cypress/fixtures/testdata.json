@@ -1,0 +1,25 @@
+{
+    "validUser": {
+        "username": "Admin",
+        "password": "admin123"
+    },
+    "invalidUser": {
+        "username": "wrong",
+        "password": "wrong"
+    },
+    "employee": {
+        "firstName": "John",
+        "lastName": "Doe",
+        "id": "12345"
+    },
+    "candidate": {
+        "firstName": "Sarah",
+        "lastName": "Miller",
+        "email": "sarah.miller@test.com"
+    },
+    "leave": {
+        "type": "CAN - Personal",
+        "from": "2024-12-12",
+        "to": "2024-12-12"
+    }
+}
