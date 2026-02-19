@@ -63,26 +63,18 @@ class PerformancePage {
 
     // ---------- AUTOCOMPLETE ----------
     selectAutocomplete(label, text) {
-        const query = text.trim().split(/\s+/)[0];
-
         cy.contains("label", label)
             .closest(".oxd-input-group")
             .find("input")
             .clear()
-            .type(query, { delay: 100 });
+            .type(text);
 
+        // Wait for dropdown and select the matching item
         cy.get(".oxd-autocomplete-dropdown", { timeout: 10000 })
             .should("be.visible")
-            .find("span")
-            .should("have.length.greaterThan", 0)
-            .then(($options) => {
-                const expected = text.toLowerCase();
-                const match = [...$options].find((option) =>
-                    option.innerText.toLowerCase().includes(expected)
-                );
-
-                cy.wrap(match || $options[0]).click({ force: true });
-            });
+            .contains("span", text)
+            .first()
+            .click({ force: true });
 
         cy.wait(500);
     }
