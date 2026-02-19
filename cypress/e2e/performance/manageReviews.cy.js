@@ -12,11 +12,12 @@ describe("Performance → Manage Reviews → Search Filter Reset Functionality",
 
         PerformancePage.fillEmployeeReviewForm({
             employeeName: "John Doe",
-            fromDate: "2025-01-01",
-            toDate: "2025-12-31",
-            jobTitle: "QA Engineer",
-            reviewStatus: "Activated"
+            fromDate: "2024-01-01",
+            toDate: "2026-12-31",
+            jobTitle: "Software Engineer",
+            reviewStatus: "In Progress"
         });
+
 
         PerformancePage.resetEmployeeReviewForm();
     });

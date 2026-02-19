@@ -67,14 +67,16 @@ class PerformancePage {
             .closest(".oxd-input-group")
             .find("input")
             .clear()
-            .type(text, { delay: 100 });
+            .type(text);
 
-        cy.get(".oxd-autocomplete-dropdown", { timeout: 7000 }).should("be.visible");
-
-        cy.contains(".oxd-autocomplete-dropdown span", text)
+        // Wait for dropdown and select the matching item
+        cy.get(".oxd-autocomplete-dropdown", { timeout: 10000 })
+            .should("be.visible")
+            .contains("span", text)
+            .first()
             .click({ force: true });
 
-        cy.wait(300);
+        cy.wait(500);
     }
 
     // ---------- DATE INPUT ----------
