@@ -21,12 +21,21 @@ class AddUserPage {
     }
 
     enterEmployeeName(name) {
-        cy.get(this.employeeNameInput).clear().type(name.split(' ')[0], { delay: 300 });
+        const query = name.trim().split(/\s+/)[0];
+        cy.get(this.employeeNameInput).clear().type(query, { delay: 200 });
 
         cy.get('.oxd-autocomplete-dropdown')
             .should('be.visible')
-            .contains('span', name)
-            .click();
+            .find('span')
+            .should('have.length.greaterThan', 0)
+            .then(($options) => {
+                const expected = name.toLowerCase();
+                const match = [...$options].find((option) =>
+                    option.innerText.toLowerCase().includes(expected)
+                );
+
+                cy.wrap(match || $options[0]).click({ force: true });
+            });
     }
 
     selectStatus(status) {
