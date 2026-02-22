@@ -48,6 +48,8 @@ describe("Full Flow: Create Employee + Create System User", () => {
         createdSysUser = sysUsername;
 
         // STEP 3 — Verification
+        cy.url({ timeout: 20000 }).should("include", "/admin/viewSystemUsers");
+        AdminPage.searchUser(sysUsername);
         AdminPage.verifyUserAdded(sysUsername);
     });
 });
