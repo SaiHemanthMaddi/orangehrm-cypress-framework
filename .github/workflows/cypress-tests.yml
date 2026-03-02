@@ -18,9 +18,20 @@ on:
           - firefox
           - edge
       spec:
-        description: 'Specific test spec to run (leave empty for all tests)'
+        description: 'Select test spec to run'
         required: false
-        type: string
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - cypress/e2e/login/login.cy.js
+          - cypress/e2e/dashboard/dashboard.cy.js
+          - cypress/e2e/admin/admin.cy.js
+          - cypress/e2e/admin/admintopnav.cy.js
+          - cypress/e2e/pim/addEmployee.cy.js
+          - cypress/e2e/performance/manageReviews.cy.js
+          - cypress/e2e/performance/performancetopnav.cy.js
+          - cypress/e2e/sidebar/sidebar.cy.js
 
   # Trigger on push to main branch (optional)
   push:
@@ -58,7 +69,7 @@ jobs:
         uses: cypress-io/github-action@v6
         with:
           browser: ${{ inputs.browser || matrix.browser }}
-          spec: ${{ inputs.spec || 'cypress/e2e/**/*.cy.js' }}
+          spec: ${{ (inputs.spec == 'all' || inputs.spec == '') && 'cypress/e2e/**/*.cy.js' || inputs.spec }}
           config-file: cypress.config.js
         env:
           CYPRESS_BASE_URL: https://opensource-demo.orangehrmlive.com
@@ -98,6 +109,6 @@ jobs:
           echo "### Test Execution Summary :rocket:" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "- **Browser**: ${{ inputs.browser || matrix.browser }}" >> $GITHUB_STEP_SUMMARY
-          echo "- **Spec**: ${{ inputs.spec || 'All tests' }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Spec**: ${{ (inputs.spec == 'all' || inputs.spec == '') && 'All tests' || inputs.spec }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Run Number**: ${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
           echo "- **Triggered by**: ${{ github.event_name }}" >> $GITHUB_STEP_SUMMARY
